@@ -16,13 +16,15 @@ class StopWatch extends React.Component {
 
 		this.state = this.initialState = {
 			isWorking: false,
-			lapTimes: [],
+			taskTimes: [],
 			timeElapsed: 0,
 			description: '',
-			setTime: ""
+			setTime: "",
+			startDate: null,
+			endDate: null
 		};
 
-		for (let method of ["lap", "update", "reset", "toggle"]) {
+		for (let method of ["logTask", "update", "reset", "toggle"]) {
 			this[method] = this[method].bind(this);
 		}
 	}
@@ -40,9 +42,18 @@ class StopWatch extends React.Component {
 	}
 
 	/*Must be save*/
-	lap() {
-		const {lapTimes, timeElapsed} = this.state;
-		this.setState({lapTimes: lapTimes.concat(timeElapsed)});
+	logTask() {
+		const {taskTimes, timeElapsed, description} = this.state;
+
+		const a = taskTimes.concat({
+			time: timeElapsed,
+			description: description,
+			date: new Date().getDate()
+		});
+
+		console.log(a);
+
+		this.setState(a);
 	}
 
 	/*Set timer to 0*/
@@ -57,7 +68,6 @@ class StopWatch extends React.Component {
 		this.timer = setInterval(this.update, 10);
 	}
 
-
 	update() {
 		const delta = Date.now() - this.startTime;
 		this.setState({timeElapsed: this.state.timeElapsed + delta});
@@ -65,7 +75,7 @@ class StopWatch extends React.Component {
 	}
 
 	render() {
-		const {isWorking, lapTimes, timeElapsed} = this.state;
+		const {isWorking, taskTimes, timeElapsed, description} = this.state;
 		return (
 			<div className="stopwatch">
 				<TimeElapsed id="timer" timeElapsed={timeElapsed}/>
@@ -78,7 +88,7 @@ class StopWatch extends React.Component {
 					Reset
 				</button>
 				{/*Save task time and reset timer to 00:00:00*/}
-				<button onClick={this.lap} disabled={!timeElapsed}>
+				<button onClick={this.logTask} disabled={!timeElapsed}>
 					Log Time
 				</button>
 				{/*User able to set time*/}
@@ -99,7 +109,7 @@ class StopWatch extends React.Component {
 						onChange={this.onChangeHandler('description')}
 					/>
 				</div>
-				{lapTimes.length > 0 && <LapTimes lapTimes={lapTimes}/>}
+				{taskTimes.length > 0 && <TaskTimes taskTimes={taskTimes}/>}
 			</div>
 		);
 	}
@@ -129,21 +139,24 @@ class TimeElapsed extends React.Component {
 	}
 }
 
-class LapTimes extends React.Component {
+class TaskTimes extends React.Component {
 	render() {
-		const rows = this.props.lapTimes.map((lapTime, index) =>
+		console.log(this);
+		const rows = this.props.taskTimes.map((taskTime, index) =>
 			<tr key={++index}>
 				<td>{index}</td>
-				<td><TimeElapsed timeElapsed={lapTime}/></td>
+				<td><TimeElapsed timeElapsed={taskTime}/></td>
 				<td>Description</td>
 			</tr>
 		);
 		return (
-			<table id="lap-times">
+			<table id="task-times">
 				<thead>
 				<tr>
 					<th>Lap</th>
 					<th>Time</th>
+					<th>Description</th>
+					<th>Date</th>
 				</tr>
 				</thead>
 				<tbody>{rows}</tbody>
