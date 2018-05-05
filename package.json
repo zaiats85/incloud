@@ -5,12 +5,24 @@
   "dependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "body-parser": "^1.17.1",
+    "ejs": "^2.5.9",
+    "express": "^4.15.2",
+    "faker": "^4.1.0",
+    "mongoose": "^5.0.16",
+    "path": "^0.12.7"
   },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  },
+  "main": "server.js",
+  "proxy": "http://localhost:8888/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "dev": "nodemon index.js"
   }
 }
