@@ -2,3 +2,22 @@
     background-color: aqua;
     text-align: center;
 }
+.set-time input {
+    border: none;
+    width: 35px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.milliseconds {
+    display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"]{
+    -moz-appearance: textfield;
+}
