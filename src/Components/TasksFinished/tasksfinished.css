@@ -1,0 +1,8 @@
+table {
+    margin: 0 auto;
+}
+th {
+    font-weight: 900;
+    background-color: lightblue;
+    border-collapse: collapse;
+}
