@@ -7,7 +7,7 @@ class TasksFinished extends React.Component {
 	render() {
 		const rows = this.props.tasksFinished.map((task, index) =>
 			<tr key={++index}>
-				<td>{index}</td>
+				<td>{index + this.props.pageStep}</td>
 				<td><TimeElapsed timeElapsed={task.time}/></td>
 				<td>{task.description || 'default descr'}</td>
 				<td>{date(new Date(task.startDate)) || 'no date'}</td>
