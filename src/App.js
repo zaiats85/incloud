@@ -20,6 +20,17 @@ class App extends Component {
 		}
 	}
 
+	search = (value) => {
+		let route = value ? `/api/search/${value}` : "/api/tasks/";
+		this.callApi(route)
+			.then(res => {
+					this.setState({tasksFinished: res});
+					if(!res.length) console.warn('Nothing found!');
+				}
+			)
+			.catch(err => console.log(err));
+	};
+
 	handleClick(event) {
 		this.setState({
 			currentPage: Number(event.target.id)
@@ -27,7 +38,7 @@ class App extends Component {
 	}
 
 	handlerUpdateTasks() {
-		this.callApi()
+		this.callApi('/api/tasks')
 			.then(res =>
 				this.setState({tasksFinished: res})
 			)
@@ -38,8 +49,8 @@ class App extends Component {
 		this.handlerUpdateTasks();
 	}
 
-	callApi = async () => {
-		const response = await fetch('/api/tasks');
+	callApi = async (route) => {
+		const response = await fetch(route);
 		const body = await response.json();
 		if (response.status !== 200) throw Error(body.message);
 		return body;
@@ -80,6 +91,25 @@ class App extends Component {
 				</header>
 
 				<StopWatch fireAction={this.handlerUpdateTasks} />
+
+				<div>
+					<input
+						type="search"
+						id="search"
+						placeholder="search by description"
+						onChange={(evt)=> {
+							let charLen = evt.target.value.length;
+							if(charLen > 3 || charLen === 0)
+								this.search(evt.target.value)
+							}
+						}
+					/>
+					<button
+						onClick={
+							(evt) => this.search(evt.target.previousElementSibling.value)
+						}
+					>Search</button>
+				</div>
 
 				{this.state.tasksFinished.length > 0 && <TasksFinished tasksFinished={currentTasks} pageStep={(this.state.currentPage-1) * this.state.tasksPerPage}/>}
 
