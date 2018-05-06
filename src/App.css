@@ -35,3 +35,14 @@ input::-webkit-inner-spin-button {
 input[type="number"]{
   -moz-appearance: textfield;
 }
+
+ul li {
+  display: inline;
+  list-style-type: none;
+  padding: 10px;
+  cursor: pointer;
+
+}
+ul li:hover, ul li.active {
+  color: red;
+}

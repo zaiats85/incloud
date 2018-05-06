@@ -145,7 +145,6 @@ class StopWatch extends React.Component {
 						onChange={this.onChangeHandler('description')}
 					/>
 				</div>
-				{/*{tasksFinished.length > 0 && <TasksFinished tasksFinished={tasksFinished}/>}*/}
 			</div>
 		);
 	}
